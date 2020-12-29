@@ -1,38 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{useState} from 'react';
 import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import GoalItems from './components/GoalItems'
+import GoalItems from './components/GoalItems';
+import GoalInput from './components/GoalInput'
 
 export default function App() {
 
-  const [gaol, setgaol] = useState('');
   const [crouseGoal,setcrouseGoal] = useState([]);
 
-  const goalIputHandlear = (enteredtext) =>{
-    setgaol(enteredtext)
-  }
+  
 
-  const addGaolHandeler = () => {
-    setcrouseGoal(currentGoal=>[...currentGoal,{id : Math.random().toString(),value:gaol}])
+  const addGaolHandeler = (enterdGoal) => {
+    setcrouseGoal(currentGoal=>[...currentGoal,{id : Math.random().toString(),value:enterdGoal}])
   }
   return (
     <View style={styles.container}>
-      <View style={styles.inputview}>
-        <TextInput
-        placeholder="Goal's"
-        style={styles.inputtext}
-        onChangeText={goalIputHandlear}
-        value={gaol}
-         />
-        <Button 
-        title='Add'
-        onPress={addGaolHandeler}
-        style={{borderRadius:10}}
-        />
-      </View>
+      <GoalInput onAddGoal={addGaolHandeler}/>
       <FlatList data={crouseGoal}
       keyExtractor={(item ,index)=>item.id} 
-      renderItem={(Goal)=><GoalItems title={Goal.item.value}/>
+      renderItem={(itemData)=><GoalItems title={itemData.item.value}/>
       }
       />
         
@@ -45,16 +31,4 @@ const styles = StyleSheet.create({
     padding:50,
     backgroundColor: '#fff'
   },
-  inputview:{
-    flexDirection:"row",
-    justifyContent:"space-between",
-    alignItems:'center'
-  },
-  inputtext:{
-    width:'80%',
-    borderColor:'black',
-    borderBottomWidth:1,
-    padding:10,
-  },
- 
 });

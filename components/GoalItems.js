@@ -3,7 +3,7 @@ import { View, Text,StyleSheet } from 'react-native'
 
 const GoalItems = (props) => {
     return (
-        <View style={styles.listitem} key={Goal} >
+        <View style={styles.listitem}  >
         <Text style={styles.text}>{props.title}</Text>
       </View>
     )
