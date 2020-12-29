@@ -7,21 +7,34 @@ import GoalInput from './components/GoalInput'
 export default function App() {
 
   const [crouseGoal,setcrouseGoal] = useState([]);
+  const [isAddMode, setisAddMode] = useState(false)
 
   
 
   const addGaolHandeler = (enterdGoal) => {
     setcrouseGoal(currentGoal=>[...currentGoal,{id : Math.random().toString(),value:enterdGoal}])
+    setisAddMode(false)
   }
+
+  const removeGoalHandeler = (goalid)=>{
+    setcrouseGoal(currentGoal=>{
+      return currentGoal.filter((goal)=>goal.id!==goalid)
+    })
+  }
+
+  const cancelGoal =()=>{
+    setisAddMode(false)
+  }
+
   return (
     <View style={styles.container}>
-      <GoalInput onAddGoal={addGaolHandeler}/>
+      <Button title="Add a new Goal" onPress={()=>setisAddMode(true)}/>
+      <GoalInput visible={isAddMode} onAddGoal={addGaolHandeler} cancel={cancelGoal}/>
       <FlatList data={crouseGoal}
       keyExtractor={(item ,index)=>item.id} 
-      renderItem={(itemData)=><GoalItems title={itemData.item.value}/>
+      renderItem={(itemData)=><GoalItems id={itemData.item.id} onDelete ={removeGoalHandeler} title={itemData.item.value}/>
       }
-      />
-        
+      />   
     </View>
   );
 }
